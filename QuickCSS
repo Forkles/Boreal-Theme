@@ -1,0 +1,29 @@
+.theme-dark, .theme-light {
+    --background-primary: #050D16 !important;
+    --background-secondary: #050D16 !important;
+    --background-secondary-alt: #050D16 !important;
+    --background-tertiary: #050D16 !important;
+    --background-floating: #050D16 !important;
+    --channeltextarea-background: #050D16 !important;
+    --input-background: #050D16 !important;
+    
+    --brand-experiment: #78A5C5 !important;
+    --brand-experiment-hover: #8abbd9 !important;
+    --brand-experiment-active: #6792b0 !important;
+    
+    --text-link: #78A5C5 !important;
+    --interactive-active: #78A5C5 !important;
+    --header-primary: #e0e0e0 !important;
+}
+
+div[class^="sidebar_"], 
+nav[class^="wrapper_"], 
+div[class^="scroller_"], 
+div[class^="container_"] {
+    background: #050D16 !important;
+}
+
+div[class^="scrollableContainer_"] {
+    background-color: #050D16 !important;
+    border: 1px solid #78A5C5 !important; 
+}
