@@ -1,0 +1,327 @@
+[
+{
+    "layer": "top",
+    "position": "top",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "height": 0,
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "margin-bottom": 0,
+    "hyprland/workspaces": {
+        "size": 12,
+        "disable-scroll": false,
+        "all-outputs": true,
+        "on-click": "activate",
+        "on-scroll-up": "hyprctl dispatch workspace e-1",
+        "on-scroll-down": "hyprctl dispatch workspace e+1",
+        "format": "{icon}",
+        "format-icons": {
+            "active": "●",
+            "default": "○",
+            "urgent": "!"
+        },
+        "persistent-workspaces": {
+            "*": 0
+        }
+    },
+
+    "modules-left": [
+
+    ],
+    "modules-center": [
+
+    ],
+    "modules-right": [
+    ],
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 50,
+        "separate-outputs": true
+    },
+
+    "custom/media": {
+        "format": "{}",
+        "interval": 5,
+        "exec": "playerctl metadata --format '{{ artist }} — {{ title }}' 2>/dev/null || echo ''",
+        "exec-if": "playerctl status 2>/dev/null | grep -q Playing",
+        "on-click": "playerctl play-pause",
+        "on-click-right": "playerctl stop",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous",
+        "max-length": 45,
+        "tooltip": false
+    },
+
+    "custom/cava": {
+    "exec": "/home/forkle/.config/waybar/scripts/cava_visualizer.sh",
+    "format": "{}",
+    "rotate": 0,
+    "on-click": "pkill -USR1 -f cava_visualizer.sh",
+    "on-click-right": "playerctl play-pause",
+    "tooltip": false
+},
+"custom/os_button": {
+        "format": "☰",
+        "on-click": "omarchy-menu",
+        "tooltip": false
+    },
+},
+
+{
+    "layer": "top",
+    "position": "right",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "width": 34,
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "margin-bottom": 0,
+    "orientation": "vertical",
+
+    "modules-left": [
+        "custom/os_button",
+        "hyprland/workspaces", 
+        "custom/cava"
+],
+    "modules-center": [
+        "hyprland/window"
+    ],
+    "modules-right": [
+        "tray",
+        "bluetooth",
+        "custom/wireguard",
+        "network",
+        "pulseaudio",
+        "battery",
+        "custom/disk",
+        "custom/uptime",
+        "custom/processes",
+        "group/hardware",
+        "custom/clock",
+        "custom/power"
+    ],
+
+    "custom/clock": {
+            "exec": "date '+%-I:%M'",
+            "interval": 60,
+            "on-click": "alacritty -T 'Calendar' -- sh -c 'cal -3; echo; read -n 1 -s -r -p \"Press any key to close\"'",
+            "tooltip-format": "{calendar}",
+            "format": "{}" 
+        },
+
+    "hyprland/workspaces": {
+        "size": 12,
+        "disable-scroll": false,
+        "all-outputs": true,
+        "on-click": "activate",
+        "on-scroll-up": "hyprctl dispatch workspace e-1",
+        "on-scroll-down": "hyprctl dispatch workspace e+1",
+        "format": "{icon}",
+        "format-icons": {
+            "active": "●",
+            "default": "○",
+            "urgent": "!"
+        },
+        "persistent-workspaces": {
+            "*": 0
+        }
+    },
+
+    "custom/wireguard": {
+    "format": "{}",
+    "exec": "/home/forkle/.config/waybar/scripts/wwg.sh",
+    "return-type": "json",
+    "interval": 5,
+    "on-click": "/home/forkle/.config/waybar/scripts/wwg.sh toggle",
+    "signal": 8
+},
+  
+    "hyprland/submap": {
+        "format": "{}",
+        "max-length": 8,
+        "tooltip": false
+    },
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 18,
+        "separate-outputs": true,
+        "rotate": 270
+    },
+
+    "custom/os_button": {
+        "format": "☰",
+        "on-click": "omarchy-menu",
+        "tooltip": false
+    },
+  
+    "custom/cava": {
+    "exec": "/home/forkle/.config/waybar/scripts/cava_visualizer.sh",
+    "format": "{}",
+    "rotate": 90,
+    "on-click": "pkill -USR1 -f cava_visualizer.sh",
+    "on-click-right": "playerctl play-pause",
+    "tooltip": false
+},
+
+    "custom/disk": {
+        "format": "{}",
+        "interval": 30,
+        "exec": "df -h / | awk 'NR==2 {print $4}'",
+        "tooltip": false,
+        "on-click": "foot -e btop"
+    },
+
+    "group/hardware": {
+        "orientation": "vertical",
+        "modules": [
+            "custom/vram",
+            "temperature",
+            "custom/gpu"
+        ]
+    },
+
+    "custom/updates": {
+    "format": "  {}",
+    "interval": 3600,
+    "exec": "checkupdates | wc -l",
+    "exec-if": "exit 0",
+    "on-click": "alacritty -e sudo pacman -Syu",
+    "signal": 8
+},
+
+    "custom/vram": {
+    "exec": "nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits | awk -F',' '{ printf \"%.0f%%\", $1 / $2 * 100 }'",
+    "format": "V{}",
+    "interval": 2,
+    "tooltip": false,
+    "on-click": "alacritty -e nvtop"
+},
+
+    "cpu": {
+        "interval": 5,
+        "format": "C{usage}",
+        "states": {
+            "high": 80
+        },
+        "on-click": "alacritty -e btop"
+    },
+
+    "memory": {
+        "interval": 7,
+        "format": "R{percentage}",
+        "states": {
+            "high": 80
+        },
+        "tooltip-format": "{used:0.1f}G / {total:0.1f}G",
+        "on-click": "alacritty -e btop"
+    },
+
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C",
+        "format-critical": "{temperatureC}°!",
+        "interval": 7,
+        "on-click": "alacritty -e btop"
+    },
+
+    "custom/gpu": {
+        "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits 2>/dev/null || echo 'N/A'",
+        "format": "{}°C",
+        "interval": 7,
+        "on-click": "alacritty -e nvtop"
+    },
+  
+    "network": {
+        "format-wifi": "{icon} ",
+        "interval": 10,
+        "format-icons": {
+            "wifi": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
+        },
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤭",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}\n↑ {bandwidthUpBits}  ↓ {bandwidthDownBits}",
+        "on-click": "alacritty -e nmtui"
+    },
+  
+    "pulseaudio": {
+    "format": "{icon}",
+    "on-click": "omarchy-launch-audio",
+    "on-click-right": "pamixer -t",
+    "on-scroll-up": "pamixer -i 5",
+    "on-scroll-down": "pamixer -d 5",
+    "tooltip-format": "Volume: {volume}%\n{desc}",
+    "scroll-step": 5,
+    "format-muted": "󰝟",
+    "format-icons": {
+      "headphone": "",
+      "default": ["", "", ""]
+    }
+},
+  
+    "battery": {
+        "format": "{icon}\n{capacity}",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip-format": "{capacity}% ({time})",
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "interval": 30,
+        "tooltip": true
+    },
+  
+    "tray": {
+        "icon-size": 12,
+        "spacing": 6
+    },
+  
+    "custom/notifications": {
+        "exec": "count=$(makoctl list | grep -c '\"app-name\"'); if [ \"$count\" -gt 0 ]; then echo \"{\\\"text\\\": \\\"  $count\\\", \\\"tooltip\\\": \\\"$count notification(s)\\\", \\\"class\\\": \\\"has-notifs\\\"}\"; else echo \"{\\\"text\\\": \\\"  0\\\", \\\"tooltip\\\": \\\"No notifications\\\", \\\"class\\\": \\\"empty\\\"}\"; fi",
+        "return-type": "json",
+        "interval": 5,
+        "on-click": "makoctl dismiss",
+        "on-click-right": "makoctl dismiss --all",
+        "tooltip": true
+    },
+
+    "custom/uptime": {
+        "exec": "uptime | awk -F'( |,|:)+' '{if ($7==\"min\") m=$6; else {if ($7~/^day/) {d=$6;h=$8;m=$9} else {h=$6;m=$7}}} END {if (d) printf \"%dd\\n%dh\", d, h; else if (h) printf \"%dh\\n%dm\", h, m; else printf \"%dm\", m}'",
+        "format": "On:\n{}",
+        "interval": 120,
+        "tooltip": false,
+        "on-click": "alacritty -e btop"
+    },
+
+    "custom/processes": {
+        "exec": "ps aux | wc -l",
+        "format": "PRC\n{}",
+        "interval": 10,
+        "tooltip": false,
+        "on-click": "alacritty -e btop"
+    },
+
+    "bluetooth": {
+    "format": "",
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱",
+    "format-no-controller": "",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "omarchy-launch-bluetooth"
+  },
+  
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "on-click": "omarchy-menu system"
+    }
+}
+]
